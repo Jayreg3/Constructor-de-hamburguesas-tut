@@ -85,32 +85,45 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     // alert("¡Has continuado con la compra!");
-    this.setState({ loading: true });
-    const order = {
-      ingredientes: this.state.ingredients,
-      //en realidad, debes re-calcular el precio por si acaso un usuario ha manipulado el precio manualmente
-      precio: this.state.totalPrice,
-      cliente: {
-        nombre: "Jerry R",
-        dirección: {
-          calle: "Calle Avenida",
-          ciudad: "Seville, Espana",
-          código_postal: "400234"
-        },
-        correo: "prueba@email.com"
-      },
-      método_de_entrega: "en coche"
-    };
-    axios
-      .post("/orders.json", order)
-      .then(response => {
-        console.log(response);
-        this.setState({ loading: false, purchasing: false });
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: true, purchasing: false });
-      });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredientes: this.state.ingredients,
+    //   //en realidad, debes re-calcular el precio por si acaso un usuario ha manipulado el precio manualmente
+    //   precio: this.state.totalPrice,
+    //   cliente: {
+    //     nombre: "Jerry R",
+    //     dirección: {
+    //       calle: "Calle Avenida",
+    //       ciudad: "Seville, Espana",
+    //       código_postal: "400234"
+    //     },
+    //     correo: "prueba@email.com"
+    //   },
+    //   método_de_entrega: "en coche"
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then(response => {
+    //     console.log(response);
+    //     this.setState({ loading: false, purchasing: false });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     this.setState({ loading: true, purchasing: false });
+    //   });
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/comprar",
+      search: "?" + queryString
+    });
   };
 
   render() {
