@@ -7,11 +7,65 @@ import Input from "../../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: ""
+    orderForm: {
+      nombre: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Tú nombre"
+        },
+        value: ""
+      },
+      calle: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Calle"
+        },
+        value: ""
+      },
+      ciudad: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Ciudad"
+        },
+        value: ""
+      },
+      código_postal: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Código Postal"
+        },
+        value: ""
+      },
+      país: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "País"
+        },
+        value: ""
+      },
+      correo: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Tú Correo"
+        },
+        value: ""
+      },
+      método_de_entrega: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "más_rapido", displayValue: "Más Rapido" },
+            { value: "más_barato", displayValue: "Más Barato" }
+          ]
+        },
+        value: ""
+      }
     },
     loading: false
   };
@@ -23,17 +77,7 @@ class ContactData extends Component {
     const order = {
       ingredientes: this.props.ingredients,
       //en realidad, debes re-calcular el precio por si acaso un usuario ha manipulado el precio manualmente
-      precio: this.props.price,
-      cliente: {
-        nombre: "Jerry R",
-        dirección: {
-          calle: "Calle Avenida",
-          ciudad: "Seville, Espana",
-          código_postal: "400234"
-        },
-        correo: "prueba@email.com"
-      },
-      método_de_entrega: "en coche"
+      precio: this.props.price
     };
     axios
       .post("/orders.json", order)
@@ -48,33 +92,35 @@ class ContactData extends Component {
       });
   };
 
+  inputChangedHandler = (event, inputIdentifier) => {
+    console.log(event.target.value);
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
+  };
+
   render() {
+    const formElementsArray = [];
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({ id: key, config: this.state.orderForm[key] });
+    }
     let form = (
       <form>
-        <Input
-          inputtype="input"
-          type="text"
-          name="name"
-          placeholder="Tú Nombre"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="email"
-          placeholder="Tú Correo"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="street"
-          placeholder="Calle"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="postal"
-          placeholder="Código Postal"
-        />
+        {formElementsArray.map(formElement => {
+          return (
+            <Input
+              key={formElement.id}
+              elementType={formElement.config.elementType}
+              elementConfig={formElement.config.elementConfig}
+              value={formElement.config.value}
+              changed={event => this.inputChangedHandler(event, formElement.id)}
+            />
+          );
+        })}
         <Button btnType="Success" clicked={this.orderHandler}>
           Pide
         </Button>
