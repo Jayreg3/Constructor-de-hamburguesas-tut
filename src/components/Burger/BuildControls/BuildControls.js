@@ -29,7 +29,7 @@ const buildControls = props => {
         disabled={!props.purchasable}
         onClick={props.ordered}
       >
-        PEDIR YA
+        {props.isAuth ? "PEDIR YA" : "Registrarte/Iniciar sesión para pedir ya"}
       </button>
     </div>
   );

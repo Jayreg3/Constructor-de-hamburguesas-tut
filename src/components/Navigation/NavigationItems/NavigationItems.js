@@ -8,7 +8,14 @@ const navigationItems = props => {
       <NavigationItem link="/" exact>
         Constructor de hamburguesas
       </NavigationItem>
-      <NavigationItem link="/pedidos">Pedidos</NavigationItem>
+      {props.isAuthenticated ? (
+        <NavigationItem link="/pedidos">Pedidos</NavigationItem>
+      ) : null}
+      {!props.isAuthenticated ? (
+        <NavigationItem link="/auth">Autenticar</NavigationItem>
+      ) : (
+        <NavigationItem link="/logout">Cerrar sesión</NavigationItem>
+      )}
     </ul>
   );
 };
