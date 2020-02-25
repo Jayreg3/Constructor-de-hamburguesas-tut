@@ -34,7 +34,7 @@ export const logout = () => {
 const checkAuthTimeout = expirationTime => {
   return dispatch => {
     setTimeout(() => {
-      console.log("[checkAuthTimeout]...firing logout");
+      // console.log("[checkAuthTimeout]...firing logout");
       dispatch(logout());
     }, expirationTime * 1000);
   };
@@ -57,7 +57,7 @@ export const auth = (email, password, isSignup) => {
     axios
       .post(url, authData)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         const expirationTime = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
@@ -68,7 +68,7 @@ export const auth = (email, password, isSignup) => {
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         dispatch(authFail(err.response.data.error));
       });
   };
@@ -83,18 +83,18 @@ export const authCheckState = () => {
     const token = localStorage.getItem("token");
     // console.log(token);
     if (!token) {
-      console.log("[authCheckState]...firing no token found");
+      // console.log("[authCheckState]...firing no token found");
       dispatch(logout());
     } else {
       const expirationTime = new Date(localStorage.getItem("expirationTime"));
       // console.log(expirationTime);
       if (expirationTime <= new Date()) {
-        console.log("[authCheckState]...firing expiration <= current time");
+        // console.log("[authCheckState]...firing expiration <= current time");
         dispatch(logout());
       } else {
-        console.log(
-          "[authCheckState]...firing authSuccess and checkAuthTimeout"
-        );
+        // console.log(
+        //   "[authCheckState]...firing authSuccess and checkAuthTimeout"
+        // );
         // console.log((expirationTime.getTime() - new Date().getTime()) / 1000);
         const userId = localStorage.getItem("userId");
         // console.log(userId);

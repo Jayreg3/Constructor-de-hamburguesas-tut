@@ -5,7 +5,7 @@ import Button from "../../UI/Button/Button";
 class OrderSummary extends Component {
   //Puede ser un componente funcional, no tiene que ser un componente clase
   componentDidUpdate() {
-    console.log("[OrderSummary] DidUpdate");
+    // console.log("[OrderSummary] DidUpdate");
   }
 
   render() {

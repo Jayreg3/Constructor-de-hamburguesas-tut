@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../utility";
+import { updateObject } from "../../shared/utility";
 
 const initialState = {
   orders: [],
@@ -44,16 +44,16 @@ const fetchOrdersFail = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PURCHASE_INIT:
-      console.log("[PURCHASE_BURGER_INIT]...firing");
+      // console.log("[PURCHASE_BURGER_INIT]...firing");
       return purchaseInit(state, action);
     case actionTypes.PURCHASE_BURGER_START:
-      console.log("[PURCHASE_BURGER_START]...firing");
+      // console.log("[PURCHASE_BURGER_START]...firing");
       return purchaseBurgerStart(state, action);
     case actionTypes.PURCHASE_BURGER_SUCCESS:
-      console.log("[PURCHASE_BURGER_SUCCESS]...firing");
+      // console.log("[PURCHASE_BURGER_SUCCESS]...firing");
       return purchaseBurgerSuccess(state, action);
     case actionTypes.PURCHASE_BURGER_FAIL:
-      console.log("[PURCHASE_BURGER_FAIL]...firing");
+      // console.log("[PURCHASE_BURGER_FAIL]...firing");
       return purchaseBurgerFail(state, action);
     case actionTypes.FETCH_ORDERS_START:
       return fetchOrdersStart(state, action);

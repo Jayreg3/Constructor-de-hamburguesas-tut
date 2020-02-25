@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../utility";
+import { updateObject } from "../../shared/utility";
 
 const initialState = {
   ingredients: null,
@@ -62,13 +62,13 @@ const fetchIngredientsFailed = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
-      console.log("[ADD_INGREDIENT]...firing");
+      // console.log("[ADD_INGREDIENT]...firing");
       return addIngredient(state, action);
     case actionTypes.REMOVE_INGREDIENT:
-      console.log("[REMOVE_INGREDIENT]...firing");
+      // console.log("[REMOVE_INGREDIENT]...firing");
       return removeIngredient(state, action);
     case actionTypes.SET_INGREDIENTS:
-      console.log("[SET_INGREDIENTS]...firing");
+      // console.log("[SET_INGREDIENTS]...firing");
       return setIngredients(state, action);
     case actionTypes.FETCH_INGREDIENTS_FAILED:
       return fetchIngredientsFailed(state, action);
